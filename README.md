@@ -1,137 +1,423 @@
-# Project 2: Basic Encryption & Decryption Toolkit
+# 🔐 Basic Encryption & Decryption Toolkit
 
-**Cyber Security Internship — Task 2**
+A Python-based educational cryptography toolkit that demonstrates classical encryption and decryption techniques, basic cryptanalysis, file processing, and session auditing.
 
-## Goal
+Built as **Project 2 of a Cyber Security Internship**, this project focuses on understanding the fundamental concepts behind substitution ciphers, encryption/decryption workflows, cryptanalysis, and basic data protection logic.
 
-Implement a simple encryption and decryption technique that demonstrates
-encryption concepts, logic building, and data protection basics.
+> ⚠️ **Educational Disclaimer:** The ciphers implemented in this project are classical cryptographic techniques and are **not suitable for protecting sensitive or production data**. Modern applications should use established cryptographic standards and libraries such as AES or ChaCha20.
 
-## Requirements Covered
+---
 
-| Requirement | Where it's implemented |
-|---|---|
-| Encrypt user text using basic logic (Caesar cipher or similar) | `CaesarCipher.encrypt()` — menu option `1` |
-| Decrypt the encrypted text | `CaesarCipher.decrypt()` — menu option `1` |
-| Display both encrypted and decrypted output | Every menu action prints Original / Encrypted / Decrypted side by side, with a round-trip check |
+## 📌 Project Overview
 
-## Beyond the base requirement
+The **Basic Encryption & Decryption Toolkit** provides an interactive command-line interface for encrypting and decrypting text using multiple classical cipher algorithms.
 
-The brief says "Caesar cipher **or similar**," so the toolkit implements three
-classical ciphers instead of one, plus the tools a security engineer would
-actually reach for to evaluate them:
+The project includes:
 
-- **Caesar Cipher** — the required fixed-shift substitution cipher
-- **Vigenère Cipher** (bonus) — keyword-based polyalphabetic cipher, much
-  harder to break than Caesar
-- **Atbash Cipher** (bonus) — alphabet-mirroring cipher, its own inverse
-- **Cryptanalysis** — brute-force (all 26 shifts) and frequency-analysis
-  attacks that *break* a Caesar-encrypted message without knowing the key
-- **File encryption/decryption** — run the cipher over a `.txt` file, not
-  just typed input
-- **Session logging** — every operation is logged with a timestamp and can
-  be exported to a report file, useful as an audit trail
+* Caesar Cipher
+* Vigenère Cipher
+* Atbash Cipher
+* Caesar Cipher brute-force analysis
+* Frequency-analysis-based cryptanalysis
+* Text file encryption and decryption
+* Session history tracking
+* Exportable session reports
+* Automated unit testing
 
-## Files
+The project goes beyond the basic requirement of implementing a single encryption technique by combining multiple classical cryptography concepts into one structured toolkit.
 
-```
-encryption_decryption.py        # main program (ciphers + interactive menu)
-test_encryption_decryption.py   # unit tests (18 tests, all passing)
-README.md                       # this file
-```
+---
 
-## How to Run
+## ✨ Features
 
-Requires Python 3.10+ (standard library only — no installs needed).
+### 🔄 Caesar Cipher
 
-```bash
-python3 encryption_decryption.py
+A substitution cipher that shifts letters by a configurable number of positions.
+
+**Example:**
+
+```text
+Plaintext : ABC XYZ
+Shift     : 3
+Encrypted : DEF ABC
 ```
 
-You'll see a menu:
+Features include:
 
-```
-  [1] Caesar Cipher - Encrypt & Decrypt
-  [2] Vigenere Cipher - Encrypt & Decrypt (bonus)
-  [3] Atbash Cipher - Encrypt & Decrypt (bonus)
-  [4] Crack a Caesar-encrypted message (cryptanalysis)
-  [5] Encrypt/Decrypt a text file
-  [6] View session history / export report
-  [0] Exit
+* Custom shift keys
+* Automatic shift normalization
+* Negative shift support
+* Large shift support
+* Case preservation
+* Preservation of spaces, digits, and punctuation
+* Encryption and decryption support
+
+---
+
+### 🔑 Vigenère Cipher
+
+A keyword-based polyalphabetic substitution cipher.
+
+**Example:**
+
+```text
+Plaintext : ATTACKATDAWN
+Key       : LEMON
+Ciphertext: LXFOPVEFRNHR
 ```
 
-## How to Test
+Features include:
+
+* Custom alphabetic keywords
+* Case preservation
+* Non-alphabetic character preservation
+* Input validation
+* Encryption and decryption support
+
+---
+
+### 🔁 Atbash Cipher
+
+A mirror substitution cipher that reverses the alphabet.
+
+```text
+A ↔ Z
+B ↔ Y
+C ↔ X
+```
+
+**Example:**
+
+```text
+Plaintext : Hello
+Encrypted : Svool
+```
+
+Because Atbash is self-inverse, the same transformation can be used for both encryption and decryption.
+
+---
+
+### 🧠 Caesar Cipher Cryptanalysis
+
+The toolkit includes basic methods for analyzing Caesar-encrypted messages.
+
+#### Brute-Force Analysis
+
+Attempts all 26 possible shifts and returns every possible decrypted result.
+
+```text
+Shift 0  → ...
+Shift 1  → ...
+Shift 2  → ...
+...
+Shift 25 → ...
+```
+
+This demonstrates why Caesar cipher is cryptographically weak: its keyspace is extremely small.
+
+#### Frequency Analysis
+
+Attempts to estimate the Caesar shift by analyzing letter frequencies and assuming that the most frequent ciphertext letter corresponds to the commonly occurring English letter `E`.
+
+> Frequency analysis is statistical and may not always produce the correct result, especially with short or unusual text.
+
+---
+
+### 📄 Text File Encryption & Decryption
+
+The toolkit can process `.txt` files using the Caesar cipher.
+
+Supported operations:
+
+* Encrypt text files
+* Decrypt encrypted text files
+* Automatically generate output filenames
+* Preserve UTF-8 text encoding
+
+Example:
+
+```text
+input.txt
+    ↓
+input_encrypted.txt
+    ↓
+input_decrypted.txt
+```
+
+---
+
+### 📋 Session History & Audit Logging
+
+Every completed operation can be recorded in an in-memory session log.
+
+Each log entry includes:
+
+* Timestamp
+* Operation performed
+* Cipher used
+* Input data
+* Output data
+* Additional information such as shift or key
+
+Session history can also be exported as a timestamped text report.
+
+Example:
+
+```text
+session_report_20260719_213000.txt
+```
+
+This demonstrates the concept of maintaining a basic audit trail for security-related operations.
+
+---
+
+## 🖥️ Interactive CLI
+
+The application provides a menu-driven command-line interface.
+
+```text
+================================================
+          ENCRYPTION & DECRYPTION TOOLKIT
+        Project 2 - Cyber Security Internship
+================================================
+
+[1] Caesar Cipher - Encrypt & Decrypt
+[2] Vigenere Cipher - Encrypt & Decrypt
+[3] Atbash Cipher - Encrypt & Decrypt
+[4] Crack a Caesar-encrypted message
+[5] Encrypt/Decrypt a text file
+[6] View session history / export report
+[0] Exit
+```
+
+---
+
+## 🧪 Unit Testing
+
+The project includes automated unit tests covering the major cipher implementations.
+
+The test suite verifies:
+
+### Caesar Cipher
+
+* Basic encryption
+* Alphabet wraparound
+* Encryption/decryption round trips
+* Case preservation
+* Non-alphabetic character preservation
+* Negative and large shift normalization
+* Brute-force key coverage
+* Frequency analysis
+* Empty input handling
+
+### Vigenère Cipher
+
+* Known textbook encryption example
+* Encryption/decryption round trips
+* Preservation of non-alphabetic characters
+* Invalid key rejection
+* Empty key rejection
+
+### Atbash Cipher
+
+* Alphabet mirroring
+* Case preservation
+* Self-inverse behavior
+* Non-alphabetic character preservation
+
+Run the tests with:
 
 ```bash
 python3 -m unittest test_encryption_decryption.py -v
 ```
 
-All 18 tests should pass — covering encryption/decryption round trips,
-case and punctuation preservation, alphabet wraparound, key validation,
-and cryptanalysis accuracy.
+On Windows, you can also use:
 
-## Sample Run (option 1 — Caesar Cipher)
-
-```
-Enter text to encrypt: Hello World
-Enter shift key (1-25, default 3): 3
-----------------------------------------------------------------
-  Original Text  : Hello World
-  Shift Key      : 3
-  Encrypted Text : Khoor Zruog
-  Decrypted Text : Hello World
-  Round-trip OK? : Yes
+```bash
+python -m unittest test_encryption_decryption.py -v
 ```
 
-## Sample Run (option 4 — Cryptanalysis)
+---
 
-Feed it a Caesar-encrypted message and it will try to recover the key
-*without being told the shift*:
+## 📂 Project Structure
 
+```text
+.
+├── encryption_decryption.py
+├── test_encryption_decryption.py
+└── README.md
 ```
-Enter Caesar-encrypted text to crack: Estd td l nzyqtopyetlw tyepcylw xpxz...
 
-Frequency analysis best guess -> shift = 11
-Decrypted (best guess) : This is a confidential internal memo...
+After exporting a session report:
+
+```text
+.
+├── encryption_decryption.py
+├── test_encryption_decryption.py
+├── README.md
+└── session_report_YYYYMMDD_HHMMSS.txt
 ```
 
-Frequency analysis works by assuming the most common letter in the
-ciphertext maps to 'E' (the most common letter in English). It's reliable
-on realistic-length text but can guess wrong on short phrases — which is
-itself a useful lesson, so option 4 also offers to print **all 26 possible
-shifts** so the correct plaintext can always be spotted by eye. This is
-exactly how the Caesar cipher was broken historically: its keyspace is
-small enough (only 25 non-trivial keys) that it offers no real resistance
-to a determined attacker.
+---
 
-## Security Note (Data Protection Basics)
+## ⚙️ Requirements
 
-Caesar, Vigenère, and Atbash are **teaching ciphers**, not production
-security:
+* Python 3.9 or newer
+* No external dependencies required
 
-- Caesar has only 25 possible keys — trivial to brute-force in milliseconds.
-- Vigenère is stronger but still breakable via frequency analysis once the
-  key length is discovered (Kasiski examination).
-- Atbash has no key at all — the "encryption" is public knowledge.
+The project uses only Python's standard library, including:
 
-None of these should ever be used to protect real sensitive data. Real-world
-data protection relies on:
+* `unittest`
+* `os`
+* `sys`
+* `collections`
+* `datetime`
 
-- **Symmetric encryption** — AES-256, with a securely generated and stored key
-- **Asymmetric encryption** — RSA or ECC, for key exchange and digital signatures
-- **Hashing** — SHA-256 or bcrypt/Argon2 for passwords, to verify integrity
-  without storing the original data
-- **Transport security** — TLS, so data isn't sent in plaintext over a network
-- **Key management** — the hardest part in practice; an algorithm is only as
-  secure as the protection around its key
+---
 
-This toolkit is a controlled demonstration of *why* classical ciphers fail —
-the cryptanalysis feature (option 4) is, in effect, a working proof of that
-weakness.
+## 🚀 Installation & Usage
 
-## Possible Future Enhancements
+### 1. Clone the Repository
 
-- Add AES (via `cryptography` library) as a "real" cipher alongside the
-  classical ones, to contrast weak vs. modern encryption side by side
-- `argparse` support for non-interactive/scriptable use
-- Kasiski examination to auto-detect Vigenère key length
+```bash
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
+```
+
+Replace the repository URL with your actual GitHub repository URL.
+
+---
+
+### 2. Run the Application
+
+```bash
+python encryption_decryption.py
+```
+
+On some systems:
+
+```bash
+python3 encryption_decryption.py
+```
+
+---
+
+### 3. Select an Operation
+
+Use the interactive menu to:
+
+1. Encrypt and decrypt text using Caesar Cipher
+2. Encrypt and decrypt text using Vigenère Cipher
+3. Encrypt and decrypt text using Atbash Cipher
+4. Perform basic Caesar cipher cryptanalysis
+5. Encrypt or decrypt a text file
+6. View or export session history
+7. Exit the application
+
+---
+
+## 🔐 Security Concepts Demonstrated
+
+This project demonstrates several foundational cybersecurity concepts:
+
+| Concept                   | Implementation                     |
+| ------------------------- | ---------------------------------- |
+| Substitution Ciphers      | Caesar and Atbash                  |
+| Polyalphabetic Encryption | Vigenère Cipher                    |
+| Key-Based Encryption      | Shift values and keywords          |
+| Cryptanalysis             | Brute-force and frequency analysis |
+| Data Transformation       | Text and file encryption           |
+| Input Validation          | Vigenère key validation            |
+| Audit Logging             | Session history                    |
+| Automated Testing         | Python `unittest`                  |
+
+---
+
+## 📊 Security Limitations
+
+This toolkit is designed for **education and experimentation**, not real-world security.
+
+### Caesar Cipher
+
+The Caesar cipher is extremely weak because:
+
+* It has only 26 possible shifts
+* Brute-force attacks are trivial
+* Frequency analysis can often reveal the key
+
+### Atbash Cipher
+
+Atbash does not use a secret key and has a fixed transformation, making it unsuitable for secure communication.
+
+### Vigenère Cipher
+
+Although stronger than a simple Caesar cipher, classical Vigenère encryption is still vulnerable to cryptanalysis and should not be used to protect sensitive data.
+
+### File Encryption
+
+The file encryption feature uses the Caesar cipher and therefore should **not** be considered secure file encryption.
+
+For real-world applications, use modern, peer-reviewed cryptographic algorithms and secure key-management practices.
+
+---
+
+## 🧠 What I Learned
+
+Through this project, I explored:
+
+* How classical substitution ciphers work
+* The difference between encryption and decryption
+* Key-based cryptographic transformations
+* Alphabet wraparound logic
+* Case-preserving text processing
+* Brute-force cryptanalysis
+* Frequency-analysis concepts
+* File input/output operations
+* Input validation
+* Session auditing and logging
+* Automated unit testing
+* The limitations of classical cryptographic algorithms
+
+---
+
+## 🔮 Future Improvements
+
+Potential future improvements include:
+
+* Add modern encryption using AES-GCM
+* Add secure password-based key derivation using PBKDF2 or Argon2
+* Add authenticated encryption
+* Add binary file support
+* Add a graphical user interface
+* Add JSON or CSV report export
+* Add configurable logging levels
+* Add more cryptanalysis techniques
+* Add command-line arguments using `argparse`
+* Add test coverage reporting
+* Add CI testing with GitHub Actions
+
+---
+
+## ⚠️ Disclaimer
+
+This project is intended strictly for **educational and cybersecurity learning purposes**.
+
+The classical ciphers implemented in this toolkit are not suitable for protecting confidential, sensitive, or production data. Do not use this project as a replacement for modern cryptographic libraries or industry-standard encryption algorithms.
+
+---
+
+## 👨‍💻 Author
+
+**Gaurav Gajam**
+
+Computer Engineering Student | Cybersecurity & Software Development Enthusiast
+
+---
+
+## ⭐ Acknowledgements
+
+This project was developed as part of a cybersecurity internship task focused on:
+
+> **Basic Encryption & Decryption**
+
+The implementation extends the original requirements by adding multiple classical ciphers, cryptanalysis capabilities, file processing, session auditing, and automated unit testing.
